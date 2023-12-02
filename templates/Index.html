@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>在线打字练习</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">欢迎来到在线打字练习</h1>
+        
+        <div class="row">
+          <div class="col-md-6 offset-md-3">
+            <label for="inputText" class="form-label">请输入以下文本：</label>
+            <input type="text" class="form-control mb-3" id="inputText" name="inputText">
+            <h4 id="targetText" class="text-center"></h4>
+            <button type="submit" class="btn btn-primary mt-3">提交</button>
+          </div>
+        </div>
+      
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
+            // 接收来自Flask的输入并更新目标文本
+            function updateTargetText(text) {
+              var targetTextElement = document.getElementById('targetText');
+              targetTextElement.textContent = text;
+            }
+        </script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+          // 使用AJAX请求获取目标文本
+          $(document).ready(function() {
+            $.ajax({
+              url: '/update_target',
+              type: 'POST',
+              dataType: 'json',
+              success: function(response) {
+                if (response.status === 'success') {
+                  updateTargetText(response.text);
+                }
+              }
+            });
+          });
+        </script>
+    </div>
+</body>
+</html>
