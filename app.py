@@ -8,7 +8,7 @@ def index():
 
 @app.route('/update_target', methods=['POST'])
 def update_target():
-    target_text = "Hello World!"
+    target_text = "Hello World this is typing practice"
     # 在这里做一些处理，例如验证文本格式等
 
     # 将目标文本通过AJAX响应发送给网页
