@@ -18,7 +18,7 @@ function highlightMistakes() {
             for (var j = 0; j < correctPosition.length; ++j){
                 separated[correctPosition[j] - 1] = "<span style='color: green;'>" + separated[correctPosition[j] - 1] + "</span>";
             }
-            highlightedText += ("<span style='color: red;'>" + separated.join('') + "</span> ");  
+            highlightedText += ("<span style='color: red;'>" + separated.join('') + "</span> ");
             //如果输入到一半，那么没有输入的是红色，输入的是绿色，并且用动态规划的最长相同字串来进行染色
         }
     }
