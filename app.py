@@ -5,6 +5,7 @@ import string
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
+app.secret_key = 'your_secret_key' 
 
 #创建数据库
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///typing_practice.db'  # 使用 SQLite 数据库
@@ -94,4 +95,6 @@ def update_target():
     return jsonify({'status': 'success', 'text': target_text})
 
 if __name__ == '__main__':
+    with app.app_context():
+        db.create_all()
     app.run()
