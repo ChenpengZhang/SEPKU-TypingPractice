@@ -15,7 +15,6 @@
 <body>
     <div class="container mt-5">
         <h1 class="text-center mb-4">欢迎来到在线打字练习</h1>
-        <div id="timer">练习时间: 00:00</div>
 
         <div class="row">
             <div class="col-md-6 offset-md-3">
@@ -31,24 +30,6 @@
         <script src="../static/js/ajax.js"></script>
         <script src="../static/js/script.js"></script>
 
-        <script>
-            var startTime = Date.now();
-
-            function formatTime(seconds) {
-                var minutes = Math.floor(seconds / 60);
-                var remainingSeconds = Math.floor(seconds % 60);
-                return (minutes < 10 ? '0' : '') + minutes + ':' + (remainingSeconds < 10 ? '0' : '') + remainingSeconds;
-            }
-
-            function updateTimer() {
-                var currentTime = Date.now();
-                var elapsedTimeInSeconds = Math.floor((currentTime - startTime) / 1000);
-                var formattedTime = formatTime(elapsedTimeInSeconds);
-                document.getElementById('timer').textContent = '停留时间: ' + formattedTime;
-            }
-
-            setInterval(updateTimer, 1000); // 更新时间显示每1000毫秒（1秒）
-        </script>
     </div>
 </body>
 </html>

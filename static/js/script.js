@@ -56,3 +56,16 @@ function longestSequence(text1, text2) {
     }
     return path[m][n];
 }
+
+function formatTime(seconds) {
+    var minutes = Math.floor(seconds / 60);
+    var remainingSeconds = Math.floor(seconds % 60);
+    return (minutes < 10 ? '0' : '') + minutes + ':' + (remainingSeconds < 10 ? '0' : '') + remainingSeconds;
+}
+
+function updateTimer() {
+    var currentTime = Date.now();
+    var elapsedTimeInSeconds = Math.floor((currentTime - startTime) / 1000);
+    var formattedTime = formatTime(elapsedTimeInSeconds);
+    return formattedTime;
+}
