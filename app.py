@@ -4,6 +4,7 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
 import random
 import string
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 import sys
 
 app = Flask(__name__)
@@ -12,6 +13,7 @@ app.secret_key = 'your_secret_key'
 #创建数据库
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///typing_practice.db'  # 使用 SQLite 数据库
 db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 
 #配置登录视图
 login_manager = LoginManager()
