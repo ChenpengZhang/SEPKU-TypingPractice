@@ -9,6 +9,7 @@ flask = "==3.0.0"
 flask-login = "*"
 flask-sqlalchemy = "*"
 gunicorn = "*"
+flask-migrate = "*"
 
 [dev-packages]
 
