@@ -1,8 +1,10 @@
+from platform import python_revision
 from flask import Flask, render_template, request, jsonify, flash, redirect, url_for
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user
 import random
 import string
 from flask_sqlalchemy import SQLAlchemy
+import sys
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key' 
@@ -99,4 +101,5 @@ def update_target():
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
+    print(sys.version)
     app.run()
