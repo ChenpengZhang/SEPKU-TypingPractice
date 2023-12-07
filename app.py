@@ -57,7 +57,7 @@ def login():
             user_id = user.id if user else None
             login_user(user)
             #传入用户ID
-            return redirect(url_for('index'), user_id = user_id)
+            return redirect(url_for('index'))
         else:
             flash('登录失败，请检查用户名和密码。')
     return render_template('login.html')
