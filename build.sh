@@ -1,5 +1,5 @@
 #!/bin/bash
 
 pipenv install -r requirements.txt
-flask db init
-flask db update
+pipenv run flask db init
+pipenv run flask db upgrade
