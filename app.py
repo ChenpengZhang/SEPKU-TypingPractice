@@ -107,7 +107,7 @@ def update_target():
 if __name__ == '__main__':
     engine = SQLAlchemy.create_engine(app.config['SQLALCHEMY_DATABASE_URI'])
     inspector = SQLAlchemy.inspect(engine)
-    if not inspector.has_table("User"):
+    if not inspector.has_table("user"):
         with app.app_context():
             db.drop_all()
             db.create_all()
