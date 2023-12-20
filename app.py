@@ -11,7 +11,7 @@ app.secret_key = 'your_secret_key'
 
 #创建数据库
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///typing_practice.db'  # 使用 SQLite 数据库
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://myuser:mypassword@localhost/typing_practice'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://typing_practice_user:cdWGXWszMGYJHhNGzg1i8NhUvjWb07dI@dpg-cm18scocmk4c73d6u55g-a/typing_practice'
 db = SQLAlchemy(app)
 
 
