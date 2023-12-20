@@ -5,13 +5,17 @@ import random
 import string
 from flask_sqlalchemy import SQLAlchemy
 import sys
+import os
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key' 
 
 #创建数据库
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///typing_practice.db'  # 使用 SQLite 数据库
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://typing_practice_user:cdWGXWszMGYJHhNGzg1i8NhUvjWb07dI@dpg-cm18scocmk4c73d6u55g-a/typing_practice'
+
+if os.getenv('DATABASE_URL'):
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL').replace("postgres://", "postgresql://", 1)
+else:
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///typing_practice.db'  # 使用 SQLite 数据库
 db = SQLAlchemy(app)
 
 
