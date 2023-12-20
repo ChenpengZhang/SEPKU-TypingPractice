@@ -4,16 +4,16 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
 import random
 import string
 from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
 import sys
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key' 
 
 #创建数据库
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///typing_practice.db'  # 使用 SQLite 数据库
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///typing_practice.db'  # 使用 SQLite 数据库
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://myuser:mypassword@localhost/typing_practice'
 db = SQLAlchemy(app)
-migrate = Migrate(app, db)
+
 
 #配置登录视图
 login_manager = LoginManager()
@@ -101,7 +101,15 @@ def update_target():
     return jsonify({'status': 'success', 'text': target_text})
 
 if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
-    print(sys.version)
+    engine = SQLAlchemy.create_engine(app.config['SQLALCHEMY_DATABASE_URI'])
+    inspector = SQLAlchemy.inspect(engine)
+    if not inspector.has_table("User"):
+        with app.app_context():
+            db.drop_all()
+            db.create_all()
+            app.logger.info('Initialized the database!')
+    else:
+        app.logger.info('Database already contains the users table.')
+        
+    print("Python version: ", sys.version)
     app.run()

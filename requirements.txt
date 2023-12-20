@@ -2,5 +2,5 @@ behave==1.2.6
 flask==3.0.0
 flask_login
 flask_sqlalchemy
-Flask-Migrate
+psycopg2-binary
 gunicorn
