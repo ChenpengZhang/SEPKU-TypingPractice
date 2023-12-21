@@ -30,7 +30,8 @@ def create_app():
     # Check if the database needs to be initialized
     engine = sa.create_engine(app.config['SQLALCHEMY_DATABASE_URI'])
     print(app.config['SQLALCHEMY_DATABASE_URI'])
-    db.create_all()
+    with app.app_context():
+        db.create_all()
     inspector = sa.inspect(engine)
     if not inspector.has_table("users"):
         print("db has no users")
