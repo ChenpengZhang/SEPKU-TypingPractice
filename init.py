@@ -7,9 +7,9 @@ from flask.logging import default_handler
 from logging.handlers import RotatingFileHandler
 import logging
 from views import index, login, logout, register, update_target
+from database import db
 
-
-db = SQLAlchemy()
+#db = SQLAlchemy()
 login_manager = LoginManager()
 login_manager.login_view = "login"
 
