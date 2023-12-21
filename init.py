@@ -50,7 +50,7 @@ def create_app():
             exists = check_user_table_exists()
             print("user exists? ", exists)
         else:
-            app.logger.info('Database already contains the users table.')
+            app.logger.info('Database already contains the user table.')
 
     
     
@@ -97,4 +97,4 @@ def configure_logging(app):
 def check_user_table_exists():
     metadata = MetaData()
     metadata.reflect(bind=db.engine)
-    return 'users' in metadata.tables
+    return 'user' in metadata.tables

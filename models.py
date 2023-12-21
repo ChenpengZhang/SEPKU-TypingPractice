@@ -17,7 +17,7 @@ class User(UserMixin, db.Model):
     REMEMBER: Never store the plaintext password in a database!
     """
 
-    __tablename__ = 'users'
+    __tablename__ = 'user'
     id = mapped_column(Integer(), primary_key=True, autoincrement=True)
     username = mapped_column(String(), unique=True, nullable=False)
     password_hashed = mapped_column(String(128), nullable=False)
