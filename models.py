@@ -38,7 +38,7 @@ class User(UserMixin, db.Model):
         self.password_hashed = self._generate_password_hash(password_plaintext)
 
     @staticmethod
-    def _generate_password_hash(password_plaintext):
-        return generate_password_hash(password_plaintext)
+    def _generate_password_hash(password_plaintext, method='pbkdf2:sha256', salt_length=8):
+        return generate_password_hash(password_plaintext, method=method, salt_length=salt_length)
 
 
