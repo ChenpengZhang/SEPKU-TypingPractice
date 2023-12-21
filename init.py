@@ -6,15 +6,14 @@ import sqlalchemy as sa
 from flask.logging import default_handler
 from logging.handlers import RotatingFileHandler
 import logging
-from views import index, login, logout, register, update_target
-from database import db
+from sqlalchemy import MetaData
 
-#db = SQLAlchemy()
+db = SQLAlchemy()
 login_manager = LoginManager()
 login_manager.login_view = "login"
 
-
 def create_app():
+    
     # Create the Flask application
     app = Flask(__name__)
 
@@ -26,27 +25,33 @@ def create_app():
     app.config['SECRET_KEY'] = 'your_secret_key' 
     
     initialize_extensions(app)
+    
+   
 
     # Check if the database needs to be initialized
-    engine = sa.create_engine(app.config['SQLALCHEMY_DATABASE_URI'])
-    print(app.config['SQLALCHEMY_DATABASE_URI'])
-    with app.app_context():
-        db.create_all()
-    inspector = sa.inspect(engine)
+    #engine = sa.create_engine(app.config['SQLALCHEMY_DATABASE_URI'])
+    #inspector = sa.inspect(engine)
+    """
     if not inspector.has_table("users"):
         print("db has no users")
         with app.app_context():
             db.drop_all()
             db.create_all()
             app.logger.info('Initialized the database!')
-    else:
-        app.logger.info('Database already contains the users table.')
+    """
+    with app.app_context():
+        exists = check_user_table_exists()
+        if not exists:
+            db.drop_all()
+            db.create_all()
+            app.logger.info('Initialized the database!')
+            print('Initialized the database!')
+            exists = check_user_table_exists()
+            print("user exists? ", exists)
+        else:
+            app.logger.info('Database already contains the users table.')
 
-    app.add_url_rule('/', 'index', index)
-    app.add_url_rule('/login', 'login', login, methods=['GET', 'POST'])
-    app.add_url_rule('/logout', 'logout', logout)
-    app.add_url_rule('/register', 'register', register, methods=['GET', 'POST'])
-    app.add_url_rule('/update_target', 'update_target', update_target, methods=['POST'])
+    
     
     return app
 
@@ -86,3 +91,9 @@ def configure_logging(app):
     app.logger.removeHandler(default_handler)
 
     app.logger.info('Starting the Flask User Management App...')
+
+
+def check_user_table_exists():
+    metadata = MetaData()
+    metadata.reflect(bind=db.engine)
+    return 'users' in metadata.tables

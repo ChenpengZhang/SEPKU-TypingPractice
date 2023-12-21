@@ -2,7 +2,8 @@
 from flask import Flask, render_template, request, jsonify, flash, redirect, url_for
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user
 from models import User
-from database import db
+from init import db
+
 
 @login_required
 def index():
