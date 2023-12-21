@@ -6,6 +6,7 @@ import sqlalchemy as sa
 from flask.logging import default_handler
 from logging.handlers import RotatingFileHandler
 import logging
+from views import index, login, logout, register, update_target
 
 
 db = SQLAlchemy()
@@ -37,6 +38,12 @@ def create_app():
     else:
         app.logger.info('Database already contains the users table.')
 
+    app.add_url_rule('/', 'index', index)
+    app.add_url_rule('/login', 'login', login, methods=['GET', 'POST'])
+    app.add_url_rule('/logout', 'logout', logout)
+    app.add_url_rule('/register', 'register', register, methods=['GET', 'POST'])
+    app.add_url_rule('/update_target', 'update_target', update_target, methods=['POST'])
+    
     return app
 
 
