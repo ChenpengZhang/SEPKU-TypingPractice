@@ -41,6 +41,7 @@ def create_app():
     """
     with app.app_context():
         exists = check_user_table_exists()
+        print("exists: ", exists)
         if not exists:
             db.drop_all()
             db.create_all()
