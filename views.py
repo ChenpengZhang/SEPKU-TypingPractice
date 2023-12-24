@@ -9,7 +9,7 @@ from init import db
 def index():
     return render_template('Index.html')
 
-#��¼��ͼ
+#登录视图
 #@app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -20,23 +20,23 @@ def login():
             if user.is_password_correct(password):
                 user_id = user.id if user else None
                 login_user(user)
-                #�����û�ID
+                
                 return redirect(url_for('index'))
             else:
-                flash('��¼ʧ�ܣ������û���������')
+                flash("请检查用户名和密码")
         else:
-            flash('�û�������')
+            flash("用户不存在")
     return render_template('login.html')
 
 
-#�ǳ���ͼ
+#登出视图
 #@app.route('/logout')
 @login_required
 def logout():
     logout_user()
     return redirect(url_for('login'))
 
-#ע����ͼ
+#注册视图
 #@app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
@@ -45,12 +45,12 @@ def register():
         
         user = User.query.filter_by(username = new_username).first()
         if user:
-            flash('�û����ѱ�ע��')
+            flash("用户名已存在")
         else:
             new_user = User(username = new_username, password_plaintext=new_password)
             db.session.add(new_user)
             db.session.commit()
-            flash('�û�ע��ɹ�')
+            flash("注册成功")
             return redirect(url_for('login'))
     return render_template('register.html')
 
