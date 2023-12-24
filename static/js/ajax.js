@@ -9,7 +9,7 @@ $(document).ready(function() {
         type: 'POST',
         data: { level: currentLevel },
         success: function(response) {
-            updateTargetText(response.text);
+            updateLevelInfo(response.text);
         }
     });
 });
@@ -25,7 +25,7 @@ function switchLevel(level) {
         // 更新当前关卡和文字内容
         currentLevel = level;
         localStorage.setItem('currentLevel', currentLevel);
-        updateTargetText(response.text);
+        updateLevelInfo(response.text);
         // 显示文字内容到页面
         },
         error: function(xhr, status, error) {

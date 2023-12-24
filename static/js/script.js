@@ -1,7 +1,10 @@
-//更新文字部分
-function updateTargetText(text) {
+//更新关卡信息
+function updateLevelInfo(text) {
+    document.getElementById('inputText').value = '';  //重置输入框
+    timerStarted = false;
+    document.getElementById('timer').innerText = '00:00';  //重置计时器
     var targetTextElement = document.getElementById('targetText');
-    targetTextElement.textContent = text;
+    targetTextElement.textContent = text;  //更新目标文字
 }
 
 //用户打字后的一系列反应
