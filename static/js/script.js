@@ -1,8 +1,16 @@
+//更新文字部分
 function updateTargetText(text) {
     var targetTextElement = document.getElementById('targetText');
     targetTextElement.textContent = text;
 }
 
+//用户打字后的一系列反应
+function detectInput() {
+    highlightMistakes();
+    invokeTimer();
+}
+
+//错误矫正部分
 function highlightMistakes() {
     var inputWords = document.getElementById('inputText').value.split(" ");
     var targetWords = document.getElementById('targetText').textContent.split(" ");
@@ -57,15 +65,33 @@ function longestSequence(text1, text2) {
     return path[m][n];
 }
 
-function formatTime(seconds) {
-    var minutes = Math.floor(seconds / 60);
-    var remainingSeconds = Math.floor(seconds % 60);
-    return (minutes < 10 ? '0' : '') + minutes + ':' + (remainingSeconds < 10 ? '0' : '') + remainingSeconds;
+//计时部分
+var timerStarted = false;
+var startTime;
+
+function startTimer() {
+    startTime = new Date().getTime();
+    timerStarted = true;
 }
 
 function updateTimer() {
-    var currentTime = Date.now();
-    var elapsedTimeInSeconds = Math.floor((currentTime - startTime) / 1000);
-    var formattedTime = formatTime(elapsedTimeInSeconds);
-    return formattedTime;
+    if (timerStarted) {
+        var currentTime = new Date().getTime();
+        var elapsedTime = currentTime - startTime;
+        var seconds = Math.floor(elapsedTime / 1000);
+        var minutes = Math.floor(seconds / 60);
+
+        // 格式化时间为 mm:ss 的形式
+        var formattedTime = ("0" + minutes).slice(-2) + ":" + ("0" + (seconds % 60)).slice(-2);
+
+        document.getElementById("timer").innerText = formattedTime;
+  }
 }
+
+function invokeTimer() {
+    if (!timerStarted) {
+        startTimer();
+    }
+}
+
+setInterval(updateTimer, 1000); // 每秒更新计时器

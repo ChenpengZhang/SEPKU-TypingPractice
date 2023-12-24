@@ -1,4 +1,4 @@
-#-*-coding:gb2312-*-
+#-*-coding:utf8-*-
 from flask import Flask, render_template, request, jsonify, flash, redirect, url_for
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user
 from models import User
@@ -9,7 +9,7 @@ from init import db
 def index():
     return render_template('Index.html')
 
-#µÇÂ¼ÊÓÍ¼
+#ï¿½ï¿½Â¼ï¿½ï¿½Í¼
 #@app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -20,23 +20,23 @@ def login():
             if user.is_password_correct(password):
                 user_id = user.id if user else None
                 login_user(user)
-                #´«ÈëÓÃ»§ID
+                #ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ID
                 return redirect(url_for('index'))
             else:
-                flash('µÇÂ¼Ê§°Ü£¬Çë¼ì²éÓÃ»§ÃûºÍÃÜÂë')
+                flash('ï¿½ï¿½Â¼Ê§ï¿½Ü£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½')
         else:
-            flash('ÓÃ»§²»´æÔÚ')
+            flash('ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½')
     return render_template('login.html')
 
 
-#µÇ³öÊÓÍ¼
+#ï¿½Ç³ï¿½ï¿½ï¿½Í¼
 #@app.route('/logout')
 @login_required
 def logout():
     logout_user()
     return redirect(url_for('login'))
 
-#×¢²áÊÓÍ¼
+#×¢ï¿½ï¿½ï¿½ï¿½Í¼
 #@app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
@@ -45,22 +45,26 @@ def register():
         
         user = User.query.filter_by(username = new_username).first()
         if user:
-            flash('ÓÃ»§ÃûÒÑ±»×¢²á')
+            flash('ï¿½Ã»ï¿½ï¿½ï¿½ï¿½Ñ±ï¿½×¢ï¿½ï¿½')
         else:
             new_user = User(username = new_username, password_plaintext=new_password)
             db.session.add(new_user)
             db.session.commit()
-            flash('ÓÃ»§×¢²á³É¹¦')
+            flash('ï¿½Ã»ï¿½×¢ï¿½ï¿½É¹ï¿½')
             return redirect(url_for('login'))
     return render_template('register.html')
 
 #@app.route('/update_target', methods=['POST'])
 def update_target():
-    target_text = "Hello World this is typing practice"
-    # ÔÚÕâÀï×öÒ»Ğ©´¦Àí£¬ÀıÈçÑéÖ¤ÎÄ±¾¸ñÊ½µÈ
-
-    # ½«Ä¿±êÎÄ±¾Í¨¹ıAJAXÏìÓ¦·¢ËÍ¸øÍøÒ³
-    return jsonify({'status': 'success', 'text': target_text})
+    """
+    æ¥æ”¶è¿™ä¸ªPOSTæ–¹æ³•çš„è¡¨å•æ ¼å¼ä¸º
+    'level': (String)levelnumber
+    """
+    text_map = ["Hello World this is typing practice", "Someone knocked at her door just as Victoria was about to leave her flat. It was strange because she hadn't heard the lift or anyone on the stairs. She quickly tried to put on her other shoe and nearly fell over. There were many unopened letters â€“ probably asking for money â€“ on the floor."]
+    # è¿™é‡Œæ˜¯ä¸€ä¸ªè¯•éªŒï¼Œè¿™é‡Œçš„textmapåº”å½“æ˜¯ä¸€ä¸ªå…³å¡å¯¹åº”çš„è¯­å¥è¡¨
+    level = int(request.form['level'])  # è§£æéœ€è¦å“ªä¸€å…³
+    target_text = text_map[level - 1]
+    return jsonify({'status': 'success', 'text': target_text})  # è¿”å›å…³å¡æ–‡æœ¬
 
 
 

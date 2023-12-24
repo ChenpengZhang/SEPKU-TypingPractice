@@ -3,34 +3,58 @@
 <head>
     <title>在线打字练习</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1/dist/css/bootstrap.min.css">
-    <style>
-        #timer {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            font-size: 16px;
-        }
-    </style>
 </head>
 <body>
-    <div class="container mt-5">
-        <h1 class="text-center mb-4">欢迎来到在线打字练习</h1>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">SOFTWARE PKU</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">首页</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="levelDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">关卡选择</a>
+                        <ul class="dropdown-menu" aria-labelledby="levelDropdown" id="levelMenu">
+                            <li><a class="dropdown-item" href="#" onclick="switchLevel(1)">关卡1</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="switchLevel(2)">关卡2</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="switchLevel(3)">关卡3</a></li>
+                            <!-- 添加更多关卡 -->
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://github.com/ChenpengZhang/SEPKU-TypingPractice">Github</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">登出</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-        <div class="row">
-            <div class="col-md-6 offset-md-3">
-                <label for="inputText" class="form-label">请输入以下文本：</label>
-                <input type="text" class="form-control mb-3" id="inputText" name="inputText" oninput="highlightMistakes()">
-                <h4 id="targetText" class="text-center"></h4>
-                <button type="submit" class="btn btn-primary mt-3">提交</button>
+        <div class="container mt-5" id="content">
+            <h1 class="text-center mb-4">欢迎来到在线打字练习</h1>
+            <div class="row">
+                <div class="col-md-6 offset-md-3">
+                    <label for="inputText" class="form-label">请输入以下文本：</label>
+                    <input type="text" class="form-control mb-3" id="inputText" name="inputText" oninput="detectInput()">
+                    <h4 id="targetText" class="text-center"></h4>
+                    <button type="submit" class="btn btn-primary mt-3">提交</button>
+                    <h4 id="timer" class="text-center mt-3">00:00</h4>
+                </div>
             </div>
         </div>
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="../static/js/ajax.js"></script>
-        <script src="../static/js/script.js"></script>
-        <a href="/logout" class="d-block text-center mt-2">登出</a>
-    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../static/js/ajax.js"></script>
+    <script src="../static/js/script.js"></script>
 </body>
 </html>
 
