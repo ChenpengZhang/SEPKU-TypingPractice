@@ -7,6 +7,7 @@ from flask.logging import default_handler
 from logging.handlers import RotatingFileHandler
 import logging
 from sqlalchemy import MetaData
+# from models import User,Level,UserLevel
 
 db = SQLAlchemy()
 login_manager = LoginManager()
@@ -20,7 +21,7 @@ def create_app():
     if os.getenv('DATABASE_URL'):
         app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL').replace("postgres://", "postgresql://", 1)
     else:
-        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///typing_practice.db'  # Ê¹ÓÃ SQLite Êý¾Ý¿â
+        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///typing_practice.db'  # Ê¹ï¿½ï¿½ SQLite ï¿½ï¿½ï¿½Ý¿ï¿½
         
     app.config['SECRET_KEY'] = 'your_secret_key' 
     
@@ -40,18 +41,28 @@ def create_app():
             app.logger.info('Initialized the database!')
     """
     with app.app_context():
-        exists = check_user_table_exists()
+        exists = check_table_exists('user') and check_table_exists('level')
         print("exists: ", exists)
         if not exists:
             db.drop_all()
             db.create_all()
             app.logger.info('Initialized the database!')
             print('Initialized the database!')
-            exists = check_user_table_exists()
-            print("user exists? ", exists)
+            exists = check_table_exists('user') and check_table_exists('level')
+            print("user and level exists? ", exists)
         else:
-            app.logger.info('Database already contains the user table.')
+            app.logger.info('Database already contains the user and level table.')
 
+        # exists = check_table_exists('level')
+        # print("exists: ", exists)
+        # if not exists:
+        #     db.create_all(tables=[Level.__table__])
+        #     app.logger.info('Initialized the database!')
+        #     print('Initialized the database!')
+        #     exists = check_table_exists('Level')
+        #     print("user exists? ", exists)
+        # else:
+        #     app.logger.info('Database already contains the level table.')
     
     
     return app
@@ -66,7 +77,7 @@ def initialize_extensions(app):
     login_manager.init_app(app)
 
     # Flask-Login configuration
-    from models import User
+    from models import User,Level,UserLevel
 
     @login_manager.user_loader
     def load_user(user_id):
@@ -94,7 +105,7 @@ def configure_logging(app):
     app.logger.info('Starting the Flask User Management App...')
 
 
-def check_user_table_exists():
+def check_table_exists(db_name):
     metadata = MetaData()
     metadata.reflect(bind=db.engine)
-    return 'user' in metadata.tables
+    return db_name in metadata.tables
