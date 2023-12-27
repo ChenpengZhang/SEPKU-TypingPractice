@@ -75,7 +75,7 @@ class Level(db.Model):
 
     
 def set_level_byfile(road:str):   #通过给定路径文件，建立一个关卡
-    with open(road, 'r') as file:
+    with open(road, 'r', encoding='utf-8', errors='ignore') as file:
         data = file.read().strip()
         parts = data.split('@')
 
