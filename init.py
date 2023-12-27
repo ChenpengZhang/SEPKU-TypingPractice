@@ -7,11 +7,16 @@ from flask.logging import default_handler
 from logging.handlers import RotatingFileHandler
 import logging
 from sqlalchemy import MetaData
+from models import set_level_byfile
+from database import db
 # from models import User,Level,UserLevel
 
-db = SQLAlchemy()
+#db = SQLAlchemy()
 login_manager = LoginManager()
 login_manager.login_view = "login"
+
+# path to the level file
+level_path = "./static/level"
 
 def create_app():
     
@@ -63,7 +68,14 @@ def create_app():
         #     print("user exists? ", exists)
         # else:
         #     app.logger.info('Database already contains the level table.')
-    
+
+        # check if the level exists and initialize if not
+        print("Initializing the levels")
+        for filename in os.listdir(level_path):
+            filename = os.path.join(level_path, filename)
+            error_num = set_level_byfile(filename)
+            if(error_num == 1):
+                print("Error: check the format of ", filename)
     
     return app
 
