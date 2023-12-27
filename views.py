@@ -60,7 +60,7 @@ def update_target():
     接收这个POST方法的表单格式为
     'level': (String)levelnumber
     """
-    text_map = ["Hello World this is typing practice", "Someone knocked at her door just as Victoria was about to leave her flat. It was strange because she hadn't heard the lift or anyone on the stairs. She quickly tried to put on her other shoe and nearly fell over. There were many unopened letters – probably asking for money – on the floor."]
+    text_map = ["Hello World this is typing practice", "Someone knocked at her door just as Victoria was about to leave her flat. It was strange because she hadn't heard the lift or anyone on the stairs. She quickly tried to put on her other shoe and nearly fell over. There were many unopened letters – probably asking for money – on the floor.", "What if this is a banana"]
     # 这里是一个试验，这里的textmap应当是一个关卡对应的语句表
     level = int(request.form['level'])  # 解析需要哪一关
     target_text = text_map[level - 1]
