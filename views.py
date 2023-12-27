@@ -1,7 +1,7 @@
 #-*-coding:utf8-*-
 from flask import Flask, render_template, request, jsonify, flash, redirect, url_for
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user
-from models import User
+from models import User,Level,UserLevel,get_level_content
 from init import db
 
 
@@ -50,6 +50,11 @@ def register():
             new_user = User(username = new_username, password_plaintext=new_password)
             db.session.add(new_user)
             db.session.commit()
+            # my_test= Level(1000,"a","b",1)
+            # db.session.add(my_test)
+            # db.session.commit()
+            # outstr=str(get_level_content(1000))
+
             flash("注册成功")
             return redirect(url_for('login'))
     return render_template('register.html')
