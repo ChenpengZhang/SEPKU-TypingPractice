@@ -118,15 +118,70 @@ def get_level_content(level_id:int):
 
 class UserLevel(db.Model):
     __tablename__ = 'userlevel'
-    id = mapped_column(db.Integer, primary_key=True)
+
+    id = mapped_column(Integer(), primary_key=True, autoincrement = True)
     user_id = mapped_column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     level_id = mapped_column(db.Integer, db.ForeignKey('level.id'), nullable=False)
-    completion_time = mapped_column(db.DateTime, default=datetime.utcnow)
+    completion_time = mapped_column(db.Float)  #这个是完成打字所花的时间，单位为秒，需要后端记录一下
+    handin_time = mapped_column(db.DateTime, default=datetime.utcnow)  #这个是提交的时间戳
+    correct_rate = mapped_column(db.Float)
     user = db.relationship('User', backref=db.backref('user_levels', lazy=True))
     level = db.relationship('Level', backref=db.backref('user_levels', lazy=True))
+
+
+    def __init__(self, user_id , level_id , completion_time, handin_time, correct_rate):
+        self.user_id = user_id
+        self.level_id = level_id
+        self.completion_time = completion_time
+        self.handin_time = handin_time
+        self.correct_rate = correct_rate
+
+    def get_user_level(self):
+        return (self.user_id, self.level_id)
+    
+    def get_completion_time(self):
+        return self.completion_time
+    
+    def get_handin_time(self):
+        return self.handin_time
+    
+    def get_correct_rate(self):
+        return self.correct_rate
+    
+#根据用户ID和level ID写入某个用户某篇level的练习时间和正确率
+def set_user_level(user_id, level_id, completion_time, correct_rate):
+    user_level = UserLevel.query.filter_by(user_id=user_id, level_id=level_id).first()
+    if user_level is None:
+        new_user_level = UserLevel(user_id=user_id, level_id=level_id, completion_time=completion_time, handin_time=datetime.utcnow(), correct_rate=correct_rate)
+        db.session.add(new_user_level)
+    else:
+        user_level.completion_time = completion_time
+        user_level.handin_time = datetime.utcnow()
+        user_level.correct_rate = correct_rate
+    db.session.commit()
+    return 0
+
+#根据用户ID和level ID读取练习时间和正确率，若未给定level ID，则返回该用户所有level的练习时间和正确率
+def get_user_level(user_id, level_id=None):
+    if level_id is None:
+        user_levels = UserLevel.query.filter_by(user_id=user_id).all()
+        return [(user_level.level_id, user_level.completion_time, user_level.handin_time, user_level.correct_rate) for user_level in user_levels]
+    else:
+        user_level = UserLevel.query.filter_by(user_id=user_id, level_id=level_id).first()
+        if user_level is None:
+            return None
+        else:
+            return (user_level.level_id, user_level.completion_time, user_level.handin_time, user_level.correct_rate)
 
 #求出排行榜
 def get_sorted_user_list(level_id):
     user_list = UserLevel.query.filter_by(level_id=level_id).order_by(UserLevel.completion_time).all()
     sorted_list = [( entry.completion_time,entry.user_id) for entry in user_list]
     return sorted_list
+
+#求出前十名
+def get_top_ten(level_id):
+    user_list = UserLevel.query.filter_by(level_id=level_id).order_by(UserLevel.completion_time).limit(10).all()
+    top_ten = [(entry.user_id, entry.completion_time) for entry in user_list]
+    return top_ten
+
