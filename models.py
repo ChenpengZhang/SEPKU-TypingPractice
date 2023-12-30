@@ -5,6 +5,7 @@ from datetime import datetime
 from werkzeug.security import check_password_hash, generate_password_hash
 from database import db
 
+# 用户数据表
 class User(UserMixin, db.Model):
     """
     Class that represents a user of the application
@@ -42,6 +43,7 @@ class User(UserMixin, db.Model):
         return generate_password_hash(password_plaintext, method=method, salt_length=salt_length)
 
 
+# 关卡数据表
 class Level(db.Model):
 
     __tablename__ = 'level'
@@ -116,6 +118,7 @@ def get_level_content(level_id:int):
         # 如果没有找到，返回错误信息
         return None
 
+# 用户练习记录数据表
 class UserLevel(db.Model):
     __tablename__ = 'userlevel'
 

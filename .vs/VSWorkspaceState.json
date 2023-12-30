@@ -2,9 +2,8 @@
   "ExpandedNodes": [
     "",
     "\\static",
-    "\\static\\js",
-    "\\templates"
+    "\\static\\level"
   ],
-  "SelectedNode": "\\static\\js\\ajax.js",
+  "SelectedNode": "\\app.py",
   "PreviewInSolutionExplorer": false
 }

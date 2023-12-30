@@ -3,7 +3,7 @@ from flask import Flask, render_template, request, jsonify, flash, redirect, url
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user
 from models import User,Level,UserLevel,get_level_content
 from database import db
-from models import get_level_content
+from models import get_level_content, set_user_level
 
 
 @login_required
@@ -74,4 +74,16 @@ def update_target():
     return jsonify({'status': 'success', 'text': target_text})  # 返回关卡文本
 
 
-
+# 更新用户的练习记录（相应关卡的练习时间和正确率）
+#@app.route('/update_UserLevel', methods=['POST'])
+def update_UserLevel():
+    """
+    接收用户ID、关卡ID、练习时间和正确率
+    """
+    user_id = int(request.form[''])
+    level_id = int(request.form[''])
+    completion_time = float(request.form[''])
+    correct_rate = float(request.form[''])
+    set_user_level(user_id, level_id, completion_time, correct_rate)
+    
+    return
