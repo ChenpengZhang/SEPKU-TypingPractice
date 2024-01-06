@@ -78,10 +78,12 @@ function highlightMistakes() {
         } else if(i >= inputWords.length || inputWords[i] == null) {
             highlightedText += targetWords[i] + " ";  //如果还没输入到这个地方那么显示黑色
         } else {
-            var correctPosition = longestSequence(targetWords[i], inputWords[i]);
+            var correctPosition = longestSequence(reverseString(targetWords[i]), reverseString(inputWords[i]));  
+            //这里是为了避免动态规划总是优先规划到最后一个字符的bug，因此直接将两个字符串都翻转了
+            //返回值是（正确的字符位置）的翻转值
             var separated = targetWords[i].split("");
             for (var j = 0; j < correctPosition.length; ++j){
-                separated[correctPosition[j] - 1] = "<span style='color: green;'>" + separated[correctPosition[j] - 1] + "</span>";
+                separated[separated.length - correctPosition[j]] = "<span style='color: green;'>" + separated[separated.length - correctPosition[j]] + "</span>";
             }
             highlightedText += ("<span style='color: red;'>" + separated.join('') + "</span> ");
             //如果输入到一半，那么没有输入的是红色，输入的是绿色，并且用动态规划的最长相同字串来进行染色
@@ -89,6 +91,10 @@ function highlightMistakes() {
     }
     document.getElementById('targetText').innerHTML = highlightedText;
     return correctWordNum;
+}
+
+function reverseString(str){
+    return str.split("").reverse().join("");
 }
 
 function longestSequence(text1, text2) {
