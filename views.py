@@ -8,7 +8,8 @@ from models import get_level_content, set_user_level
 
 @login_required
 def index():
-    return render_template('Index.html')
+    user_id = session.get('user_id', None)
+    return render_template('Index.html', user_id=user_id)
 
 #登录视图
 #@app.route('/login', methods=['GET', 'POST'])
