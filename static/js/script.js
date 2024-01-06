@@ -9,8 +9,6 @@ function updateLevelInfo(text) {
     document.getElementById('result').innerText = '';  //重置结果框
 }
 
-//获取用户id
-var user_id = "{{ user_id }}";
 //关卡是否结束的判断
 var finish = false;
 
@@ -23,7 +21,7 @@ function detectInput() {
     if (isFinished()){
         var time = stopTimer();
         document.getElementById('result').innerText = 'Complete!';
-        sendStats(time, correctRate, currentLevel);
+        sendStats(user_id, time, correctRate, currentLevel);
         finish = true;
     }
 }
@@ -157,8 +155,9 @@ function invokeTimer() {
 }
 
 function stopTimer(){
+    var time = updateTimer();
     timerStarted = false;
-    return updateTimer();
+    return time;
 }
 
 setInterval(updateTimer, 7); // 每7毫秒更新计时器

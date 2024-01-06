@@ -35,6 +35,7 @@ function switchLevel(level) {
 }
 
 function sendStats(user_id, time, correct_rate, level) {
+    console.log(user_id, time, correct_rate, level);
     $.ajax({
         url: '/update_UserLevel',
         type: 'POST',
