@@ -80,10 +80,10 @@ def update_UserLevel():
     """
     接收用户ID、关卡ID、练习时间和正确率
     """
-    user_id = int(request.form[''])
-    level_id = int(request.form[''])
-    completion_time = float(request.form[''])
-    correct_rate = float(request.form[''])
+    user_id = int(request.form['user_id'])
+    level_id = int(request.form['level'])
+    completion_time = float(request.form['time'])
+    correct_rate = float(request.form['correct_rate'])
     set_user_level(user_id, level_id, completion_time, correct_rate)
     
-    return
+    return jsonify({'status': 'success'})

@@ -33,3 +33,15 @@ function switchLevel(level) {
         }
     });
 }
+
+function sendStats(user_id, time, correct_rate, level) {
+    $.ajax({
+        url: '/update_UserLevel',
+        type: 'POST',
+        data:{ user_id: user_id, level: level, time: time, correct_rate: correct_rate},
+        error: function(xhr, status, error) {
+            console.log('发送数据失败：', error);
+        }
+    })
+    
+}

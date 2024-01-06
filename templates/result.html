@@ -1,10 +1,37 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>处理结果</title>
+    <title>用户输入动画效果</title>
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 100px;
+        }
+        .typed-text {
+            font-size: 32px;
+            font-weight: bold;
+            color: #007bff;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: .15em solid #007bff;
+        }
+    </style>
 </head>
 <body>
-  <h1>处理结果：</h1>
-  <p>用户输入的文本为：{{ input_text }}</p>
+    <div class="container">
+        <h1>用户输入动画</h1>
+        <h2 id="typedText" class="typed-text"></h2>
+    </div>
+
+    <script>
+        var typedTextElement = document.getElementById('typedText');
+
+        document.addEventListener('keydown', function(event) {
+            var key = event.key;
+            typedTextElement.innerHTML += key;
+        });
+    </script>
 </body>
 </html>
