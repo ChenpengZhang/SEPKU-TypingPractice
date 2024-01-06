@@ -2,8 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\static",
+    "\\static\\js",
     "\\static\\level"
   ],
-  "SelectedNode": "\\app.py",
+  "SelectedNode": "\\models.py",
   "PreviewInSolutionExplorer": false
 }

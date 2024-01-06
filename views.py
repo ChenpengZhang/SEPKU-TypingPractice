@@ -1,5 +1,5 @@
 #-*-coding:utf8-*-
-from flask import Flask, render_template, request, jsonify, flash, redirect, url_for
+from flask import Flask, render_template, request, jsonify, flash, redirect, url_for, session
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user
 from models import User,Level,UserLevel,get_level_content
 from database import db
@@ -8,7 +8,8 @@ from models import get_level_content, set_user_level
 
 @login_required
 def index():
-    return render_template('Index.html')
+    user_id = session.get('user_id', None)
+    return render_template('Index.html', user_id=user_id)
 
 #登录视图
 #@app.route('/login', methods=['GET', 'POST'])
@@ -21,6 +22,7 @@ def login():
             if user.is_password_correct(password):
                 user_id = user.id if user else None
                 login_user(user)
+                session['user_id'] = user_id
                 
                 return redirect(url_for('index'))
             else:
