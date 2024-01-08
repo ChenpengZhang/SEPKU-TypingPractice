@@ -172,7 +172,7 @@ def get_user_level(user_id, level_id=None):
     else:
         user_level = UserLevel.query.filter_by(user_id=user_id, level_id=level_id).first()
         if user_level is None:
-            return None
+            return -1
         else:
             return (user_level.level_id, user_level.completion_time, user_level.handin_time, user_level.correct_rate)
 
