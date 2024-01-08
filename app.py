@@ -11,5 +11,5 @@ app.add_url_rule('/update_target', 'update_target', update_target, methods=['POS
 app.add_url_rule('/update_UserLevel', 'update_UserLevel', update_UserLevel, methods=['POST'])
 app.add_url_rule('/vimlevel', 'vimlevel', vimlevel)
 app.add_url_rule('/get_sorted_Userlist', '/get_sorted_Userlist', get_sorted_Userlist)
-#app.run(host='0.0.0.0', port=5000, debug=True)  
+app.run(host='0.0.0.0', port=5000, debug=True)  
 # 用gunicorn运行的时候不要写这一行
