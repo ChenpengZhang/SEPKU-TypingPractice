@@ -3,7 +3,7 @@ from flask import Flask, render_template, request, jsonify, flash, redirect, url
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user
 from models import User,Level,UserLevel,get_level_content
 from database import db
-from models import get_level_content, set_user_level
+from models import get_level_content, set_user_level, get_sorted_user_list
 
 
 @login_required
@@ -95,3 +95,11 @@ def update_UserLevel():
 def vimlevel():
     user_id = session.get('user_id', None)
     return render_template('vimlevel.html', user_id=user_id)
+
+#@app.route('/get_sorted_Userlevel', methods=['POST'])
+def get_sorted_Userlevel():
+    """
+    接收关卡ID
+    """
+    level_id = int(request.form[''])
+    return get_sorted_user_list(level_id) #返回的是一个列表，其中的元素为(用户ID，完成时间)，按照完成时间排序

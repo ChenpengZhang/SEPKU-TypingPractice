@@ -3,8 +3,9 @@
     "",
     "\\static",
     "\\static\\js",
-    "\\static\\level"
+    "\\static\\level",
+    "\\templates"
   ],
-  "SelectedNode": "\\models.py",
+  "SelectedNode": "\\views.py",
   "PreviewInSolutionExplorer": false
 }
