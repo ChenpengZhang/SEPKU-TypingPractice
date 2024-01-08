@@ -89,3 +89,9 @@ def update_UserLevel():
     set_user_level(user_id, level_id, completion_time, correct_rate)
     
     return jsonify({'status': 'success'})
+
+#@app.route('/vimlevel')
+@login_required
+def vimlevel():
+    user_id = session.get('user_id', None)
+    return render_template('vimlevel.html', user_id=user_id)

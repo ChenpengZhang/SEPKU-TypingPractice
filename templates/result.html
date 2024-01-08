@@ -1,37 +1,116 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>用户输入动画效果</title>
-    <style>
-        body {
-            background-color: #f8f9fa;
-        }
-        .container {
-            margin-top: 100px;
-        }
-        .typed-text {
-            font-size: 32px;
-            font-weight: bold;
-            color: #007bff;
-            white-space: nowrap;
-            overflow: hidden;
-            border-right: .15em solid #007bff;
-        }
-    </style>
+  <style>
+    #editor {
+      width: 500px;
+      height: 300px;
+      border: 1px solid #ccc;
+      padding: 10px;
+      font-family: monospace;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>用户输入动画</h1>
-        <h2 id="typedText" class="typed-text"></h2>
-    </div>
+  <pre id="editor" contenteditable="true"></pre>
 
-    <script>
-        var typedTextElement = document.getElementById('typedText');
+  <script>
+    // 获取编辑区域元素
+    var editor = document.getElementById("editor");
 
-        document.addEventListener('keydown', function(event) {
-            var key = event.key;
-            typedTextElement.innerHTML += key;
-        });
-    </script>
+    // 初始化光标位置
+    var cursorPos = 0;
+    updateCursor();
+
+    // 监听键盘按下事件
+    editor.addEventListener("keydown", function(e) {
+      switch (e.key) {
+        case "h":
+          moveCursorLeft();
+          break;
+        case "j":
+          moveCursorDown();
+          break;
+        case "k":
+          moveCursorUp();
+          break;
+        case "l":
+          moveCursorRight();
+          break;
+        default:
+          break;
+      }
+    });
+
+    // 移动光标左移
+    function moveCursorLeft() {
+      if (cursorPos > 0) {
+        cursorPos--;
+        updateCursor();
+      }
+    }
+
+    // 移动光标下移
+    function moveCursorDown() {
+      var rows = editor.innerHTML.split("\n");
+      var row = Math.floor(cursorPos / editor.cols);
+      var col = cursorPos % editor.cols;
+
+      if (row < rows.length - 1) {
+        cursorPos = (row + 1) * editor.cols + Math.min(col, rows[row + 1].length);
+        updateCursor();
+      }
+    }
+
+    // 移动光标上移
+    function moveCursorUp() {
+      var row = Math.floor(cursorPos / editor.cols);
+
+      if (row > 0) {
+        cursorPos -= editor.cols;
+        updateCursor();
+      }
+    }
+
+    // 移动光标右移
+    function moveCursorRight() {
+      var rows = editor.innerHTML.split("\n");
+      var row = Math.floor(cursorPos / editor.cols);
+      var col = cursorPos % editor.cols;
+
+      if (row < rows.length - 1 && col < rows[row].length) {
+        cursorPos++;
+        updateCursor();
+      }
+    }
+
+    // 更新光标位置
+    function updateCursor() {
+      var rows = editor.innerHTML.split("\n");
+      var row = Math.floor(cursorPos / editor.cols);
+      var col = cursorPos % editor.cols;
+
+      editor.innerHTML = rows.map(function(text, i) {
+        return (i === row) ? insertCursorMarker(text, col) : text;
+      }).join("\n");
+
+      setCursorPosition(row, col);
+    }
+
+    // 在行文本中插入光标标记
+    function insertCursorMarker(text, pos) {
+      return text.slice(0, pos) + "<span class='cursor-marker'></span>" + text.slice(pos);
+    }
+
+    // 设置光标位置
+    function setCursorPosition(row, col) {
+      var cursorMarker = document.querySelector(".cursor-marker");
+      if (cursorMarker) {
+        cursorMarker.scrollIntoView();
+        cursorMarker.focus();
+        window.getSelection().collapse(cursorMarker.firstChild, 0);
+      }
+    }
+  </script>
 </body>
 </html>

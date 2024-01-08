@@ -15,11 +15,6 @@
             color: #ffffff;
         }
     </style>
-    <style>
-        #originalText {
-            display: none;
-        }
-    </style>
     <script>
         var user_id = "{{ user_id }}";
     </script>
@@ -49,7 +44,7 @@
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/vimlevel">Vim挑战</a>
+                        <a class="nav-link" href="/">打字练习</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="https://github.com/ChenpengZhang/SEPKU-TypingPractice">Github</a>
@@ -65,19 +60,18 @@
     </nav>
 
         <div class="container mt-5" id="content">
-            <h1 class="text-center mb-4">打字练习</h1>
+            <h1 class="text-center mb-4">Vim挑战</h1>
             <div class="row">
                 <div class="col-md-6 offset-md-3">
-                    <label for="inputText" class="form-label"></label>
-                    <input type="text" class="form-control mb-3" id="inputText" name="inputText" oninput="detectInput()">
+                    <h4 id="editor" class="text-center">hello</h4>
                     <h4 id="targetText" class="text-center"></h4>
                     <h id="originalText"></h>
                     <div class="row mt-3">
                         <div class="col text-center">
-                            <h4 id="timer">00:00:000</h4>
+                            <h4 id="steps">0 steps</h4>
                         </div>
                         <div class="col text-center">
-                            <h4 id="accuracy">0%</h4>
+                            <h4 id="mode">----</h4>
                         </div>
                     </div>
                     <h4 id="result" class="text-center mt-3"></h4>
@@ -87,8 +81,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="../static/js/ajax.js"></script>
-    <script src="../static/js/script.js"></script>
+    <script src="../static/js/script-vim.js"></script>
 </body>
 </html>
-
