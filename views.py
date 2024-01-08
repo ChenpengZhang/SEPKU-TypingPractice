@@ -96,8 +96,8 @@ def vimlevel():
     user_id = session.get('user_id', None)
     return render_template('vimlevel.html', user_id=user_id)
 
-#@app.route('/get_sorted_Userlevel', methods=['POST'])
-def get_sorted_Userlevel():
+#@app.route('/get_sorted_Userlist', methods=['POST'])
+def get_sorted_Userlist():
     """
     接收关卡ID
     """
