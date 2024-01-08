@@ -1,3 +1,4 @@
+from xml.sax import ContentHandler
 from flask_login import UserMixin
 from sqlalchemy.orm import mapped_column
 from sqlalchemy import DateTime, ForeignKey, Integer, String
@@ -89,8 +90,14 @@ def set_level_byfile(road:str):   #通过给定路径文件，建立一个关卡
         difficulty = int(difficulty)
 
         # 检查 level_id 是否已经存在
-        if Level.query.filter_by(level_id=level_id).first() is not None:
-            return 2
+        level = Level.query.filter_by(level_id=level_id).first()
+        if level is not None:
+            level.level_id = level_id
+            level.title = title
+            level.content = content
+            level.difficulty = difficulty
+            db.session.commit()
+            return 0
         
         # 创建 Level 实例
         new_level = Level(level_id=level_id, title=title, content=content, difficulty=difficulty)
