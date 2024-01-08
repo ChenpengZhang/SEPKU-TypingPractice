@@ -3,7 +3,7 @@ from flask import Flask, render_template, request, jsonify, flash, redirect, url
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user
 from models import User,Level,UserLevel,get_level_content
 from database import db
-from models import get_level_content, set_user_level, get_sorted_user_list
+from models import get_level_content, set_user_level, get_sorted_user_list, get_user_level
 
 
 @login_required
@@ -103,3 +103,13 @@ def get_sorted_Userlist():
     """
     level_id = int(request.form[''])
     return get_sorted_user_list(level_id) #返回的是一个列表，其中的元素为(用户ID，完成时间)，按照完成时间排序
+
+#根据用户ID和关卡ID返回关卡的练习时间和正确率
+def get_practice_record():
+    """
+    接收用户ID和相应的关卡ID
+    """
+    user_id = int(request.form[''])
+    level_id = int(request.form[''])
+    
+    return get_user_level(user_id, level_id) #（关卡ID、用户完成时间、提交时间、正确率）
