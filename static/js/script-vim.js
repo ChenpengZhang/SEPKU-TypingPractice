@@ -1,6 +1,7 @@
 //更新关卡信息
 function updateLevelInfo(text_start, text_end) {
-    document.getElementById('editor').value = text_start;  //更新起始文字
+    editor.value = text_start;  //更新起始文字
+    hidden.value = text_start;  //同步更新隐藏的不带光标的文本数据
     document.getElementById('targetText').textContent = text_end;  //更新目标文字
     finish = false;  //刷新关卡状态为未完成
     document.getElementById('result').innerText = '';  //重置结果框
@@ -8,10 +9,10 @@ function updateLevelInfo(text_start, text_end) {
 
 var cursorPos = 0;  //光标位置
 var insertMode = false;  //是否处于输入状态
-var editor = document.getElementById('editor');  //文本指针
-var underCursor = editor.textContent[cursorPos];  //记录光标底下的字符是什么
+var editor = document.getElementById('editor');  //文本指针（会闪烁）
+var hidden = document.getElementById('hiddenText'); //隐藏文本指针，隐藏文本是不带光标的文本
+var isHidden = false;
 var steps = 0;
-editor.textContent = replaceStr(editor.textContent, "_", cursorPos);  //将光标置于初始位置
 
 
 document.addEventListener('keydown', function(event) {
@@ -23,7 +24,8 @@ document.addEventListener('keydown', function(event) {
                 (event.keyCode >= 97 && event.keyCode <= 122) || // 小写字母 a-z
                 (event.keyCode >= 48 && event.keyCode <= 57) || // 数字 0-9
                 (event.keyCode === 32)){
-            editor.textContent = insertStr(editor.textContent, underCursor, cursorPos + 1);
+            hidden.textContent = insertStr(hidden.textContent, event.key, cursorPos);
+            console.log(hidden.textContent);
             underCursor = event.key;
             steps++;
         }
@@ -55,20 +57,13 @@ document.addEventListener('keydown', function(event) {
 
 function moveCursorLeft(){
     if (cursorPos > 0){
-        editor.textContent = replaceStr(editor.textContent, underCursor, cursorPos);
         cursorPos--;
-        underCursor = editor.textContent[cursorPos];
-        editor.textContent = replaceStr(editor.textContent, "_", cursorPos);
     }
 }
 
 function moveCursorRight(){
     if (cursorPos < editor.textContent.length){
-        console.log(1);
-        editor.textContent = replaceStr(editor.textContent, underCursor, cursorPos);
         cursorPos++;
-        underCursor = editor.textContent[cursorPos];
-        editor.textContent = replaceStr(editor.textContent, "_", cursorPos);
     }
 }
 
@@ -110,3 +105,14 @@ function quitInsertMode(){
 function updateSteps(){
     document.getElementById("steps").textContent = steps.toString() + " steps";
 }
+
+function flicker(){
+    if (isHidden){
+        editor.textContent = hidden.textContent;
+    }else {
+        editor.textContent = replaceStr(hidden.textContent, "_", cursorPos);
+    }
+    isHidden = !isHidden;
+}
+
+setInterval(flicker, 500);
