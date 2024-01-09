@@ -20,7 +20,7 @@ function detectInput() {
     invokeTimer();
     if (isFinished()){
         var time = stopTimer();
-        document.getElementById('result').innerText = 'Complete!';
+        document.getElementById('result').innerText = '完成!';
         sendStats(user_id, time, correctRate, currentLevel);
         finish = true;
     }

@@ -22,6 +22,7 @@
     </style>
     <script>
         var user_id = "{{ user_id }}";
+        var username = "{{ username }}";
     </script>
 </head>
 <body>
@@ -34,7 +35,7 @@
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">首页</a>
+                        <a class="nav-link" href="/rank">排行榜</a>
                     </li>
                     <li class="nav-item">
                         <a id="modeswitch" class="nav-link" href="#" onclick="toggleDarkMode()">白色模式</a>
@@ -42,15 +43,15 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="levelDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">关卡选择</a>
                         <ul class="dropdown-menu" aria-labelledby="levelDropdown" id="levelMenu">
-                            <li><a class="dropdown-item" href="#" onclick="switchLevel(1)">关卡1-1</a></li>
-                            <li><a class="dropdown-item" href="#" onclick="switchLevel(2)">关卡1-2</a></li>
-                            <li><a class="dropdown-item" href="#" onclick="switchLevel(3)">关卡1-3</a></li>
-                            <li><a class="dropdown-item" href="#" onclick="switchLevel(4)">关卡2-1</a></li>
-                            <li><a class="dropdown-item" href="#" onclick="switchLevel(5)">关卡2-2</a></li>
-                            <li><a class="dropdown-item" href="#" onclick="switchLevel(6)">关卡2-3</a></li>
-                            <li><a class="dropdown-item" href="#" onclick="switchLevel(7)">关卡3-1</a></li>
-                            <li><a class="dropdown-item" href="#" onclick="switchLevel(8)">关卡3-2</a></li>
-                            <li><a class="dropdown-item" href="#" onclick="switchLevel(9)">关卡3-3</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="switchLevel(1)">1-1</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="switchLevel(2)">1-2</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="switchLevel(3)">1-3</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="switchLevel(4)">2-1</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="switchLevel(5)">2-2</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="switchLevel(6)">2-3</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="switchLevel(7)">3-1</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="switchLevel(8)">3-2</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="switchLevel(9)">3-3</a></li>
                             <!-- 添加更多关卡 -->
                         </ul>
                     </li>
@@ -62,8 +63,16 @@
                     </li>
                 </ul>
                 <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/logout">登出</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="true">
+                            <img id="navProfilePicture" src="../static/images/1.jpg" alt="avatar" class="rounded-circle img-fluid float-start me-1" style="width: 30px; margin-top: -2px;">
+                            {{ username }}
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="dropdown-item" href="/logout">登出</a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             </div>
@@ -71,12 +80,15 @@
     </nav>
 
         <div class="container mt-5" id="content">
+            <div style="height: 60px;"></div>
             <h1 class="text-center mb-4">打字练习</h1>
+            <div style="height: 100px;"></div>
             <div class="row">
                 <div class="col-md-6 offset-md-3">
                     <label for="inputText" class="form-label"></label>
                     <input type="text" class="form-control mb-3" id="inputText" name="inputText" oninput="detectInput()">
                     <h4 id="targetText" class="text-center"></h4>
+                    <div style="height: 100px;"></div>
                     <h id="originalText"></h>
                     <div class="row mt-3">
                         <div class="col text-center">

@@ -7,6 +7,26 @@ function updateLevelInfo(text_start, text_end) {
     document.getElementById('result').innerText = '';  //重置结果框
 }
 
+
+//暗黑模式切换部分
+function toggleDarkMode(){
+    var styleLight = document.getElementById('style-light');
+    var styleDark = document.getElementById('style-dark');
+
+    if (styleDark.disabled) {
+        // 切换到暗黑模式
+        styleLight.disabled = true;
+        styleDark.disabled = false;
+        document.getElementById('modeswitch').textContent = "白色模式"
+    } else {
+        // 切换回浅色模式
+        styleLight.disabled = false;
+        styleDark.disabled = true;
+        document.getElementById('modeswitch').textContent = "暗黑模式"
+    }
+}
+
+
 var cursorPos = 0;  //光标位置
 var insertMode = false;  //是否处于输入状态
 var editor = document.getElementById('editor');  //文本指针（会闪烁）

@@ -96,6 +96,11 @@ def vimlevel():
     user_id = session.get('user_id', None)
     return render_template('vimlevel.html', user_id=user_id)
 
+#@app.route('/rank')
+@login_required
+def rank():
+    return render_template('rank.html')
+
 #@app.route('/get_sorted_Userlist', methods=['POST'])
 def get_sorted_Userlist():
     """
