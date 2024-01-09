@@ -131,7 +131,7 @@ class UserLevel(db.Model):
 
     id = mapped_column(Integer(), primary_key=True, autoincrement = True)
     user_id = mapped_column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    username = mapped_column(db.String, db.ForeignKey('username'), nullable=False)
+    username = mapped_column(db.String)
     level_id = mapped_column(db.Integer, db.ForeignKey('level.id'), nullable=False)
     completion_time = mapped_column(db.Float)  #这个是完成打字所花的时间，单位为秒，需要后端记录一下
     handin_time = mapped_column(db.DateTime, default=datetime.utcnow)  #这个是提交的时间戳
