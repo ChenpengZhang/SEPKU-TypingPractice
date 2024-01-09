@@ -13,5 +13,5 @@ app.add_url_rule('/vimlevel', 'vimlevel', vimlevel)
 app.add_url_rule('/rank', 'rank', rank)
 app.add_url_rule('/get_sorted_Userlist', '/get_sorted_Userlist', get_sorted_Userlist)
 app.add_url_rule('/get_practice_record', '/get_practice_record', get_practice_record)
-#app.run(host='0.0.0.0', port=5000, debug=True)  
+app.run(host='0.0.0.0', port=5000, debug=True)  
 # 用gunicorn运行的时候不要写这一行
