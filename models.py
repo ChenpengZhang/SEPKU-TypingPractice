@@ -131,6 +131,7 @@ class UserLevel(db.Model):
 
     id = mapped_column(Integer(), primary_key=True, autoincrement = True)
     user_id = mapped_column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    username = mapped_column(db.String, db.ForeignKey('username'), nullable=False)
     level_id = mapped_column(db.Integer, db.ForeignKey('level.id'), nullable=False)
     completion_time = mapped_column(db.Float)  #这个是完成打字所花的时间，单位为秒，需要后端记录一下
     handin_time = mapped_column(db.DateTime, default=datetime.utcnow)  #这个是提交的时间戳
@@ -139,15 +140,16 @@ class UserLevel(db.Model):
     level = db.relationship('Level', backref=db.backref('user_levels', lazy=True))
 
 
-    def __init__(self, user_id , level_id , completion_time, handin_time, correct_rate):
+    def __init__(self, user_id , username , level_id , completion_time, handin_time, correct_rate):
         self.user_id = user_id
+        self.username = username
         self.level_id = level_id
         self.completion_time = completion_time
         self.handin_time = handin_time
         self.correct_rate = correct_rate
 
     def get_user_level(self):
-        return (self.user_id, self.level_id)
+        return (self.user_id, self.username, self.level_id)
     
     def get_completion_time(self):
         return self.completion_time
@@ -159,10 +161,10 @@ class UserLevel(db.Model):
         return self.correct_rate
     
 #根据用户ID和level ID写入某个用户某篇level的练习时间和正确率
-def set_user_level(user_id, level_id, completion_time, correct_rate):
+def set_user_level(user_id, username, level_id, completion_time, correct_rate):
     user_level = UserLevel.query.filter_by(user_id=user_id, level_id=level_id).first()
-    if user_level is None:
-        new_user_level = UserLevel(user_id=user_id, level_id=level_id, completion_time=completion_time, handin_time=datetime.utcnow(), correct_rate=correct_rate)
+    if user_level is None: #创建一个新的记录
+        new_user_level = UserLevel(user_id=user_id, username=username, level_id=level_id, completion_time=completion_time, handin_time=datetime.utcnow(), correct_rate=correct_rate)
         db.session.add(new_user_level)
     else:
         user_level.completion_time = completion_time
@@ -186,12 +188,12 @@ def get_user_level(user_id, level_id=None):
 #求出排行榜
 def get_sorted_user_list(level_id):
     user_list = UserLevel.query.filter_by(level_id=level_id).order_by(UserLevel.completion_time).all()
-    sorted_list = [( entry.completion_time,entry.user_id) for entry in user_list]
+    sorted_list = [( entry.completion_time,entry.username) for entry in user_list]
     return sorted_list
 
 #求出前十名
 def get_top_ten(level_id):
     user_list = UserLevel.query.filter_by(level_id=level_id).order_by(UserLevel.completion_time).limit(10).all()
-    top_ten = [(entry.user_id, entry.completion_time) for entry in user_list]
+    top_ten = [(entry.username, entry.completion_time) for entry in user_list]
     return top_ten
 

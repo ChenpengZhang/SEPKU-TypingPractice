@@ -9,7 +9,8 @@ from models import get_level_content, set_user_level, get_sorted_user_list, get_
 @login_required
 def index():
     username = session.get('username', None)
-    return render_template('Index.html', username=username)
+    user_id = session.get('user_id', None)
+    return render_template('Index.html', user_id=user_id, username=username)
 
 #登录视图
 #@app.route('/login', methods=['GET', 'POST'])
@@ -20,8 +21,9 @@ def login():
         user = User.query.filter_by(username=username).first()
         if user:
             if user.is_password_correct(password):
-                #user_id = user.id if user else None
+                user_id = user.id if user else None
                 login_user(user)
+                session['user_id'] = user_id
                 session['username'] = username
                 
                 return redirect(url_for('index'))
@@ -107,7 +109,7 @@ def get_sorted_Userlist():
     接收关卡ID
     """
     level_id = int(request.form[''])
-    return jsonify(get_sorted_user_list(level_id)) #返回的是一个列表，其中的元素为(用户ID，完成时间)，按照完成时间排序
+    return jsonify(get_sorted_user_list(level_id)) #返回的是一个列表，其中的元素为(完成时间，用户名)，按照完成时间排序
 
 #根据用户ID和关卡ID返回关卡的练习时间和正确率
 def get_practice_record():
