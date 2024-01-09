@@ -1,7 +1,11 @@
+var currentLevel = parseInt(localStorage.getItem('currentLevel')) || 1;
+console.log(currentLevel);
+
 $(document).ready(function() {
     $.ajax({
         url: '/get_sorted_Userlist',
         type: 'POST',
+        data: { level: currentLevel },
         success: function(response) {
             var data = JSON.parse(response.text);
             showRanking(data);
