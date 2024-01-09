@@ -8,8 +8,8 @@ from models import get_level_content, set_user_level, get_sorted_user_list, get_
 
 @login_required
 def index():
-    user_id = session.get('user_id', None)
-    return render_template('Index.html', user_id=user_id)
+    username = session.get('username', None)
+    return render_template('Index.html', username=username)
 
 #登录视图
 #@app.route('/login', methods=['GET', 'POST'])
@@ -20,9 +20,9 @@ def login():
         user = User.query.filter_by(username=username).first()
         if user:
             if user.is_password_correct(password):
-                user_id = user.id if user else None
+                #user_id = user.id if user else None
                 login_user(user)
-                session['user_id'] = user_id
+                session['username'] = username
                 
                 return redirect(url_for('index'))
             else:
