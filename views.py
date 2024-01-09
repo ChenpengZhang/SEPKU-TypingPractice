@@ -107,7 +107,7 @@ def get_sorted_Userlist():
     接收关卡ID
     """
     level_id = int(request.form[''])
-    return get_sorted_user_list(level_id) #返回的是一个列表，其中的元素为(用户ID，完成时间)，按照完成时间排序
+    return jsonify(get_sorted_user_list(level_id)) #返回的是一个列表，其中的元素为(用户ID，完成时间)，按照完成时间排序
 
 #根据用户ID和关卡ID返回关卡的练习时间和正确率
 def get_practice_record():
@@ -117,4 +117,4 @@ def get_practice_record():
     user_id = int(request.form[''])
     level_id = int(request.form[''])
     
-    return get_user_level(user_id, level_id) #（关卡ID、用户完成时间、提交时间、正确率）
+    return jsonify(get_user_level(user_id, level_id)) #（关卡ID、用户完成时间、提交时间、正确率）
