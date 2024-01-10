@@ -7,6 +7,7 @@ function updateLevelInfo(text) {
     document.getElementById('originalText').textContent = text;  //更新初始的文字，这个文字仅用于计算，不显示
     finish = false;  //刷新关卡状态为未完成
     document.getElementById('result').innerText = '';  //重置结果框
+    changeHands();
 }
 
 //关卡是否结束的判断
@@ -18,6 +19,7 @@ function detectInput() {
     var correctNum = highlightMistakes();
     var correctRate = displayRate(correctNum);
     invokeTimer();
+    changeHands();
     if (isFinished()){
         var time = stopTimer();
         document.getElementById('result').innerText = '完成!';
@@ -61,6 +63,21 @@ function toggleDarkMode(){
         styleLight.disabled = false;
         styleDark.disabled = true;
         document.getElementById('modeswitch').textContent = "暗黑模式"
+    }
+}
+
+function changeHands(){
+    var inputChars = document.getElementById('inputText').value.split("");
+    var originalChars = document.getElementById('originalText').textContent.split("");
+    var hint = document.getElementById('hint');
+    if (inputChars.length != originalChars.length){ //如果到了最后一个字母了就不再提示了
+        var nextChar = originalChars[inputChars.length].toLowerCase();
+        if (nextChar == " "){
+            hint.src = '../static/images/space.png';
+        } else if (nextChar != "." || nextChar != "," ){
+            hint.src = '../static/images/' + nextChar + '.png';
+        }
+        hint.alt = nextChar;
     }
 }
 
