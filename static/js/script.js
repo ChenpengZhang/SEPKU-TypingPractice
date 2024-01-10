@@ -7,6 +7,7 @@ function updateLevelInfo(text) {
     document.getElementById('originalText').textContent = text;  //更新初始的文字，这个文字仅用于计算，不显示
     finish = false;  //刷新关卡状态为未完成
     document.getElementById('result').innerText = '';  //重置结果框
+    document.getElementById('accuracy').textContent = "0%";  //重置准确率
     changeHands();
 }
 
@@ -70,11 +71,12 @@ function changeHands(){
     var inputChars = document.getElementById('inputText').value.split("");
     var originalChars = document.getElementById('originalText').textContent.split("");
     var hint = document.getElementById('hint');
+    var letterPattern = /^[a-zA-Z]+$/;
     if (inputChars.length != originalChars.length){ //如果到了最后一个字母了就不再提示了
         var nextChar = originalChars[inputChars.length].toLowerCase();
         if (nextChar == " "){
             hint.src = '../static/images/space.png';
-        } else if (nextChar != "." || nextChar != "," ){
+        } else if (letterPattern.test(nextChar)){
             hint.src = '../static/images/' + nextChar + '.png';
         }
         hint.alt = nextChar;
