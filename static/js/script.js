@@ -68,12 +68,13 @@ function toggleDarkMode(){
 }
 
 function changeHands(){
-    var inputChars = document.getElementById('inputText').value.split("");
-    var originalChars = document.getElementById('originalText').textContent.split("");
+    var inputChars = document.getElementById('inputText').value.split(" ");
+    var originalChars = document.getElementById('originalText').textContent.split(" ");
     var hint = document.getElementById('hint');
     var letterPattern = /^[a-zA-Z]+$/;
-    if (inputChars.length != originalChars.length){ //如果到了最后一个字母了就不再提示了
-        var nextChar = originalChars[inputChars.length].toLowerCase();
+    var currentPos = originalChars[inputChars.length - 1];  //现在输入到哪个词
+    if (inputChars[inputChars.length - 1].length != originalChars[inputChars.length - 1].length){ //如果到了最后一个字母了就不再提示了
+        var nextChar = currentPos[inputChars[inputChars.length - 1].length].toLowerCase();
         if (nextChar == " "){
             hint.src = '../static/images/space.png';
         } else if (letterPattern.test(nextChar)){
