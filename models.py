@@ -188,7 +188,7 @@ def get_user_level(user_id, level_id=None):
 #求出排行榜
 def get_sorted_user_list(level_id):
     user_list = UserLevel.query.filter_by(level_id=level_id).order_by(UserLevel.completion_time).all()
-    sorted_list = [( entry.completion_time,entry.username) for entry in user_list]
+    sorted_list = [( entry.completion_time,entry.correct_rate,entry.username) for entry in user_list]
     return sorted_list
 
 #求出前十名
