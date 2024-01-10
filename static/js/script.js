@@ -21,7 +21,7 @@ function detectInput() {
     if (isFinished()){
         var time = stopTimer();
         document.getElementById('result').innerText = '完成!';
-        sendStats(user_id, time, correctRate, currentLevel);
+        sendStats(user_id, time, correctRate, currentLevel, username);
         finish = true;
     }
 }

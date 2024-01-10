@@ -18,7 +18,7 @@ login_manager.login_view = "login"
 level_path = "./static/level"
 
 # the column name of each table
-column_names = {"user":["id", "username", "password_hashed", "registered_on", "test"], 
+column_names = {"user":["id", "username", "password_hashed", "registered_on"], 
                "level":["id", "level_id", "title", "content", "difficulty"], 
                "userlevel":["id", "user_id", "username", "level_id", "completion_time", "handin_time", "correct_rate"]}
 

@@ -5,10 +5,10 @@ $(document).ready(function() {
     $.ajax({
         url: '/get_sorted_Userlist',
         type: 'POST',
+        dataType: "json",
         data: { level: currentLevel },
         success: function(response) {
-            var data = JSON.parse(response.text);
-            showRanking(data);
+            showRanking(response['data']);
         }
     });
 });
@@ -20,9 +20,29 @@ function showRanking(userList){
         const tr = document.createElement("tr");
         tr.innerHTML = 
         `<th scope="row">${i + 1}</th>
-        <td>${userList[i][0]}</td>
-        <td>${userList[i][1]}</td>
-        <td>100%</td>`;
+        <td>${userList[i][2]}</td>
+        <td>${formatTime(userList[i][0])}</td>
+        <td>${userList[i][1] + "%"}</td>`;
         userUl.appendChild(tr);
     }
+}
+
+
+function formatTime(milliseconds) {
+  var totalSeconds = Math.floor(milliseconds / 1000);
+  var minutes = Math.floor(totalSeconds / 60);
+  var seconds = totalSeconds % 60;
+  var milliseconds = milliseconds % 1000;
+
+  return padZero(minutes) + ':' +
+         padZero(seconds) + '.' +
+         padThreeZeroes(milliseconds);
+}
+
+function padZero(num) {
+  return ('00' + num).slice(-2);
+}
+
+function padThreeZeroes(num) {
+  return ('000' + num).slice(-3);
 }

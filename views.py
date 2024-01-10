@@ -85,7 +85,7 @@ def update_UserLevel():
     接收用户ID、关卡ID、练习时间和正确率
     """
     user_id = int(request.form['user_id'])
-    username = "test_name" # request.form[''] need implement here
+    username = request.form['username']
     level_id = int(request.form['level'])
     completion_time = float(request.form['time'])
     correct_rate = float(request.form['correct_rate'])
@@ -110,8 +110,8 @@ def get_sorted_Userlist():
     接收关卡ID
     """
     level_id = int(request.form['level'])
-    print(level_id)
-    return jsonify(get_sorted_user_list(level_id)) #返回的是一个列表，其中的元素为(完成时间，正确率，用户名)，按照完成时间排序
+    print(get_sorted_user_list(level_id))
+    return jsonify({'status': 'success', 'data': get_sorted_user_list(level_id)}) #返回的是一个列表，其中的元素为(完成时间，正确率，用户名)，按照完成时间排序
 
 #根据用户ID和关卡ID返回关卡的练习时间和正确率
 def get_practice_record():
