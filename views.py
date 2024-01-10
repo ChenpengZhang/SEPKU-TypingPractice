@@ -120,4 +120,7 @@ def get_practice_record():
     user_id = int(request.form[''])
     level_id = int(request.form[''])
     
-    return jsonify(get_user_level(user_id, level_id)) #（关卡ID、用户完成时间、提交时间、正确率）
+    if level_id != -1:
+        return jsonify(get_user_level(user_id, level_id)) #（关卡ID、用户完成时间、提交时间、正确率）
+    else:
+        return jsonify(get_user_level(user_id)) # 一个列表，包含用户已经练习的关卡的记录，元素是（关卡ID、用户完成时间、提交时间、正确率）
